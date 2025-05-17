@@ -547,6 +547,57 @@ StudentHeader1_Menu1_Data.iframeUrl = '/WebResource.axd?d=R1Wyr3h7-nrpnhF-4-x4uW
 </script>
 </form>
 
-
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+      const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    
+      function enableDropdown(menuId, dropdownId) {
+        const menu = document.getElementById(menuId);
+        const dropdown = document.getElementById(dropdownId);
+        if (!menu || !dropdown) return;
+    
+        if (isTouch) {
+          // Touch device: toggle dropdown on tap
+          menu.addEventListener("click", function (e) {
+            e.preventDefault(); // prevent navigation
+            const isVisible = dropdown.style.display === "block";
+            dropdown.style.display = isVisible ? "none" : "block";
+            dropdown.style.visibility = isVisible ? "hidden" : "visible";
+          });
+    
+          // Optional: tap elsewhere to close all
+          document.addEventListener("click", function (e) {
+            if (!menu.contains(e.target) && !dropdown.contains(e.target)) {
+              dropdown.style.display = "none";
+              dropdown.style.visibility = "hidden";
+            }
+          });
+        } else if (isSafari) {
+          // Safari desktop: fallback hover support
+          menu.addEventListener("mouseenter", () => {
+            dropdown.style.visibility = "visible";
+            dropdown.style.display = "block";
+          });
+          menu.addEventListener("mouseleave", () => {
+            dropdown.style.visibility = "hidden";
+            dropdown.style.display = "none";
+          });
+          dropdown.addEventListener("mouseenter", () => {
+            dropdown.style.visibility = "visible";
+            dropdown.style.display = "block";
+          });
+          dropdown.addEventListener("mouseleave", () => {
+            dropdown.style.visibility = "hidden";
+            dropdown.style.display = "none";
+          });
+        }
+      }
+    
+      enableDropdown("StudentHeader1_Menu1n2", "StudentHeader1_Menu1n2Items"); // Admission
+      enableDropdown("StudentHeader1_Menu1n3", "StudentHeader1_Menu1n3Items"); // Student Work
+      enableDropdown("StudentHeader1_Menu1n5", "StudentHeader1_Menu1n5Items"); // Important Links
+    });
+    </script>
 
 </body></html>
